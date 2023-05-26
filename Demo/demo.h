@@ -7,3 +7,6 @@ void uart_init(void);
 
 void irq_handler(void);
 
+void put32(unsigned long, unsigned int);
+unsigned int get32(unsigned long);
+

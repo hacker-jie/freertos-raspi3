@@ -10,6 +10,7 @@ INCLUDEPATH3 ?= Demo
 OBJS = build/startup.o 
 OBJS +=build/FreeRTOS_asm_vector.o
 OBJS +=build/FreeRTOS_tick_config.o
+OBJS +=build/utils.o
 OBJS +=build/uart.o
 OBJS +=build/main.o
 
