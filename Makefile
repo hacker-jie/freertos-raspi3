@@ -56,13 +56,3 @@ clean :
 	rm -f build/*.o
 	rm -f *.elf
 	rm -f *.list
-
-run :
-	$(MAKE) kernel8.elf
-	qemu-system-aarch64 -M raspi3 -m 1024 -serial null -serial mon:stdio -nographic -kernel kernel8.elf
-
-runasm :
-	$(MAKE) kernel8.elf
-	qemu-system-aarch64 -M raspi3 -m 1024 -serial null -serial mon:stdio -nographic -kernel kernel8.elf -d in_asm
-
-
