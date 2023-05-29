@@ -27,6 +27,7 @@ OBJS +=build/heap_1.o
 kernel8.elf : raspberrypi3.ld $(OBJS)
 	$(CROSS)-gcc -Wl,--build-id=none -std=gnu11 -T raspberrypi3.ld -o $@ -ffreestanding -O2 -nostdlib $(OBJS)
 	$(CROSS)-objdump -D kernel8.elf > kernel8.list
+	$(CROSS)-objcopy kernel8.elf -O binary freertos.bin
 
 build/%.o : Demo/%.S $(BUILDPATH)
 	$(CROSS)-as $(ASMFLAGS) -c -o $@ $<

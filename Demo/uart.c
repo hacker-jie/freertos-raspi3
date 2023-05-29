@@ -24,11 +24,11 @@ struct UARTCTL *uartctl;
 
 void uart_putchar(uint8_t c)
 {
-	xSemaphoreTake(uartctl->tx_mux, (portTickType) portMAX_DELAY);
+	// xSemaphoreTake(uartctl->tx_mux, (portTickType) portMAX_DELAY);
 	/* wait mini uart for tx idle. */
 	while ( !(*AUX_MU_LSR & (1 << 5)) ) { }
 	*AUX_MU_IO = c;
-	xSemaphoreGive(uartctl->tx_mux);
+	// xSemaphoreGive(uartctl->tx_mux);
 }
 /*-----------------------------------------------------------*/
 
@@ -82,10 +82,10 @@ static void uart_isr_register(void (*fn)(void))
 {
 	g_vector_table[29].fn = fn;
 
-	/* enable AUX miniuart rx interrupt */
+	/* disable AUX miniuart rx interrupt */
 	*AUX_ENABLES = 1;
 	*AUX_MU_IIR  = 6; /* clear tx & rx interrupt*/
-	*AUX_MU_IER  = 1;
+	*AUX_MU_IER  = 0;
 
 	/* unmask AUX interrupt */
 	*IRQ_ENABLE_1 = 1 << 29;

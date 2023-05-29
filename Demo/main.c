@@ -14,58 +14,45 @@ within this file. */
 void vApplicationMallocFailedHook( void );
 void vApplicationIdleHook( void );
 
-static inline void io_halt(void)
-{
-    asm volatile ("wfi");
-}
-
 /*-----------------------------------------------------------*/
 
 void TaskA(void *pvParameters)
 {
 	(void) pvParameters;
 
-	uart_puts("start TaskA\n");
+    for( ;; )
+    {
+		for (char i = '1'; i <= '5'; i++)
+		    uart_putchar(i);
+
+		vTaskDelay(100 / portTICK_RATE_MS);
+    }
+}
+
+void TaskB(void *pvParameters)
+{
+	(void) pvParameters;
 
     for( ;; )
     {
-		uart_puthex(xTaskGetTickCount());
-		uart_putchar('\n');
-		vTaskDelay(500 / portTICK_RATE_MS);
+		for (char i = 'A'; i <= 'E'; i++)
+		    uart_putchar(i);
+
+		vTaskDelay(300 / portTICK_RATE_MS);
     }
 }
 
 /*-----------------------------------------------------------*/
 
-TimerHandle_t timer;
-uint32_t count=0;
-void interval_func(TimerHandle_t pxTimer)
-{
-	(void) pxTimer;
-	uint8_t buf[2];
-	uint32_t len = 0;
-
-	len = uart_read_bytes(buf, sizeof(buf) - 1);
-	if (len)
-		uart_puts((char *)buf);
-}
-/*-----------------------------------------------------------*/
-
 void main(void)
 {
 	TaskHandle_t task_a;
+	TaskHandle_t task_b;
 
 	uart_init();
-	uart_puts("qemu exit: Ctrl-A x / qemu monitor: Ctrl-A c\n");
-	uart_puts("hello world\n");
 
 	xTaskCreate(TaskA, "Task A", 512, NULL, tskIDLE_PRIORITY, &task_a);
-
-	timer = xTimerCreate("print_every_10ms",(10 / portTICK_RATE_MS), pdTRUE, (void *)0, interval_func);
-	if(timer != NULL)
-	{
-		xTimerStart(timer, 0);
-	}
+	xTaskCreate(TaskB, "Task B", 512, NULL, tskIDLE_PRIORITY, &task_b);
 
 	vTaskStartScheduler();
 }

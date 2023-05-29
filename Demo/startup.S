@@ -13,28 +13,28 @@ _boot:
     // address for stack pointer.
     ldr   x1, =_boot
     // drop to EL2.
-    mov   x2, #0x5b1    // RW=1, HCE=1, SMD=1, RES=1, NS=1
-    msr   scr_el3, x2
-    mov   x2, #0x3c9    // D=1, A=1, I=1, F=1 M=EL2h
-    msr   spsr_el3, x2
-    adr   x2, start_el2
-    msr   elr_el3, x2
-    eret
+//    mov   x2, #0x5b1    // RW=1, HCE=1, SMD=1, RES=1, NS=1
+//    msr   scr_el3, x2
+//    mov   x2, #0x3c9    // D=1, A=1, I=1, F=1 M=EL2h
+//    msr   spsr_el3, x2
+//    adr   x2, start_el2
+//    msr   elr_el3, x2
+//    eret
 
-start_el2:
-    // set sp in EL1.
-    msr   sp_el1, x1
-    // enable AArch64 in EL1.
-    mov   x0, #(1 << 31)      // AArch64
-    orr   x0, x0, #(1 << 1)   // SWIO hardwired on Pi3
-    msr   hcr_el2, x0
-    mrs   x0, hcr_el2
-    // change execution level to EL1.
-    mov   x2, #0x3c5         // D=1, A=1, I=1, F=1 M=EL1h
-    msr   spsr_el2, x2
-    adr   x2, start_el1
-    msr   elr_el2, x2
-    eret
+//start_el2:
+//    // set sp in EL1.
+//    msr   sp_el1, x1
+//    // enable AArch64 in EL1.
+//    mov   x0, #(1 << 31)      // AArch64
+//    orr   x0, x0, #(1 << 1)   // SWIO hardwired on Pi3
+//    msr   hcr_el2, x0
+//    mrs   x0, hcr_el2
+//    // change execution level to EL1.
+//    mov   x2, #0x3c5         // D=1, A=1, I=1, F=1 M=EL1h
+//    msr   spsr_el2, x2
+//    adr   x2, start_el1
+//    msr   elr_el2, x2
+//    eret
 
 start_el1:
     // set sp

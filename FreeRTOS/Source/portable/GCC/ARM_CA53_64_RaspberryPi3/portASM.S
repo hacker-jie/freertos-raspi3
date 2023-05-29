@@ -256,10 +256,10 @@ FreeRTOS_IRQ_Handler:
 	/* Maintain the interrupt nesting information across the function call. */
 	STP		X1, X5, [SP, #-0x10]!
 
-    /* Read Cor0 interrupt Source */
-	ldr		x2, ulCORE0_INT_SRCConst
-	ldr		x3, [x2]
-	ldr		w0, [x3] /* set parametor for handler */
+	/* Read Cor0 interrupt Source */
+	// ldr		x2, ulCORE0_INT_SRCConst
+	// ldr		x3, [x2]
+	// ldr		w0, [x3] /* set parametor for handler */
 
 	/* Call the C handler. */
 	BL vApplicationIRQHandler
