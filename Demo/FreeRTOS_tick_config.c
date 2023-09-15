@@ -29,7 +29,7 @@
 #define IRQ_PENDING_1		(PBASE+0x0000B204)
 #define ENABLE_IRQS_1		(PBASE+0x0000B210)
 
-const unsigned int interval = 5000;
+const unsigned int interval = 10000;
 unsigned int curVal = 0;
 
 void vClearTickInterrupt( void )

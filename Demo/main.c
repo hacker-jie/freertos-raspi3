@@ -25,7 +25,7 @@ void TaskA(void *pvParameters)
 		for (char i = '1'; i <= '5'; i++)
 		    uart_putchar(i);
 
-		vTaskDelay(100 / portTICK_RATE_MS);
+		vTaskDelay(10 / portTICK_RATE_MS);
     }
 }
 
@@ -38,7 +38,7 @@ void TaskB(void *pvParameters)
 		for (char i = 'A'; i <= 'E'; i++)
 		    uart_putchar(i);
 
-		vTaskDelay(300 / portTICK_RATE_MS);
+		vTaskDelay(30 / portTICK_RATE_MS);
     }
 }
 
